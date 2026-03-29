@@ -1,6 +1,6 @@
 # 🦖 Portfólio - Miele Silva
 
-Portfólio pessoal desenvolvido para GitHub Pages, apresentando projetos, tecnologias e experiência como Desenvolvedor Back-end Python.
+Portfólio pessoal publicado no GitHub Pages, alinhado ao perfil [@MieleSantos](https://github.com/MieleSantos), com foco em Back-end Python, IA aplicada e projetos recentes do GitHub.
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -16,8 +16,10 @@ Portfólio pessoal desenvolvido para GitHub Pages, apresentando projetos, tecnol
 - ✅ Navegação suave entre seções
 - ✅ Menu mobile hambúrguer
 - ✅ Animações ao scroll
-- ✅ Cards de projetos interativos
-- ✅ Estatísticas do GitHub integradas
+- ✅ Cards de projetos interativos com filtro por categoria (`IA`, `API`, `Dados`)
+- ✅ Card de **Projetos Recentes** carregado automaticamente da GitHub API
+- ✅ Seção de artigos/tutoriais baseada no repositório `pattern_chain`
+- ✅ Estatísticas do GitHub integradas (com fallback recomendado)
 - ✅ Botão scroll to top
 - ✅ Tema dark moderno
 
@@ -26,8 +28,9 @@ Portfólio pessoal desenvolvido para GitHub Pages, apresentando projetos, tecnol
 1. **Hero** - Apresentação principal
 2. **Sobre** - Informações pessoais e estatísticas
 3. **Tecnologias** - Stack tecnológico organizado por categoria
-4. **Projetos** - Projetos em destaque organizados por categoria
-5. **Contato** - Links para LinkedIn e GitHub
+4. **Projetos** - Projetos em destaque + filtros + card dinâmico de projetos recentes
+5. **Artigos** - Conteúdo prático sobre Prompt Template e Sequential Chain
+6. **Contato** - Links para LinkedIn e GitHub
 
 ## 📦 Como Usar
 
@@ -71,8 +74,11 @@ Edite as variáveis CSS em `styles.css`:
 - Adicione ou remova projetos na seção de projetos
 - Atualize as tecnologias na seção de skills
 
-### Estatísticas do GitHub
-As estatísticas são carregadas automaticamente da API do GitHub. Certifique-se de que o username está correto no HTML.
+### Dados do GitHub
+- Os **Projetos Recentes** são carregados via endpoint público:
+  - `https://api.github.com/users/MieleSantos/repos?sort=updated&direction=desc&per_page=100`
+- O bloco de **GitHub Stats** usa serviço de imagem externo.
+  - Se o serviço estiver indisponível, mantenha o card de projetos recentes como fonte principal dos dados dinâmicos.
 
 ## 📱 Responsividade
 
@@ -84,8 +90,10 @@ O portfólio é totalmente responsivo e funciona bem em:
 
 ## 🔗 Links
 
+- **Perfil GitHub**: [MieleSantos](https://github.com/MieleSantos)
 - **GitHub**: [@MieleSantos](https://github.com/MieleSantos)
 - **LinkedIn**: [mielesilva](https://www.linkedin.com/in/mielesilva/)
+- **Portfólio online**: [mielesantos.github.io/myportfolio](https://mielesantos.github.io/myportfolio/)
 
 ## 📄 Licença
 
