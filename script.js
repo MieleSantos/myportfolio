@@ -65,6 +65,73 @@ window.addEventListener('scroll', () => {
     }
 });
 
+function initProjectFilters() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    if (!filterButtons.length || !projectCards.length) return;
+
+    filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const selectedFilter = button.dataset.filter;
+
+            filterButtons.forEach((btn) => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            projectCards.forEach((card) => {
+                const cardCategory = card.dataset.category;
+                const shouldShow = selectedFilter === 'all' || selectedFilter === cardCategory;
+                card.classList.toggle('hidden', !shouldShow);
+            });
+        });
+    });
+}
+
+async function loadRecentProjects() {
+    const recentProjectsList = document.getElementById('recentProjectsList');
+    if (!recentProjectsList) return;
+
+    try {
+        const response = await fetch('https://api.github.com/users/MieleSantos/repos?sort=updated&direction=desc&per_page=100');
+        if (!response.ok) {
+            throw new Error('Erro ao buscar projetos recentes.');
+        }
+
+        const repos = await response.json();
+        const recentRepos = repos
+            .filter((repo) => !repo.fork && repo.name.toLowerCase() !== 'mielesantos')
+            .slice(0, 6);
+
+        if (!recentRepos.length) {
+            recentProjectsList.innerHTML = '<li>Nenhum repositório recente encontrado.</li>';
+            return;
+        }
+
+        recentProjectsList.innerHTML = '';
+        recentRepos.forEach((repo) => {
+            const listItem = document.createElement('li');
+
+            const link = document.createElement('a');
+            link.href = repo.html_url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = repo.name;
+
+            const meta = document.createElement('div');
+            meta.className = 'recent-meta';
+            const language = repo.language || 'Sem linguagem definida';
+            const updatedAt = new Date(repo.updated_at).toLocaleDateString('pt-BR');
+            meta.textContent = `${language} | Atualizado em ${updatedAt}`;
+
+            listItem.appendChild(link);
+            listItem.appendChild(meta);
+            recentProjectsList.appendChild(listItem);
+        });
+    } catch (error) {
+        recentProjectsList.innerHTML = '<li>Não foi possível carregar os projetos recentes agora.</li>';
+    }
+}
+
 // Animate on scroll
 const observerOptions = {
     threshold: 0.1,
@@ -90,6 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
+
+    initProjectFilters();
+    loadRecentProjects();
 });
 
 // Typing effect for hero title (optional enhancement)
